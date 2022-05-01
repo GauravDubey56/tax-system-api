@@ -27,9 +27,7 @@ app.use(cors());
 app.use(morgan('combined'));
 connectDB();
 app.use('/', routes.check)
-app.use('/api/v1/cmdty', routes.cmdty)
-app.use('/api/v1/market', routes.market)
-app.use('/api/v1/report', routes.reports)
+
 
 const port = process.env.PORT
 app.listen(port, () => {
