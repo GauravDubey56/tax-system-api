@@ -9,9 +9,8 @@ const PayerSchema = new mongoose.Schema({
         required: [true, 'Add a username'],
         unique: [true, 'Username already exists']
     },
-    password: {
+    userId: {
         type: String, 
-        required: [true, 'Please add a valid password']
     },
     age:{
         type: Number, 
@@ -35,5 +34,7 @@ const PayerSchema = new mongoose.Schema({
 
 })
 
+
 const Payer = mongoose.model('Payer', PayerSchema);
+
 module.exports = Payer;

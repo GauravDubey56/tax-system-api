@@ -1,3 +1,4 @@
 
 const check = require('./check')
-module.exports = {check }
+const auth = require('./auth')
+module.exports = { check, auth }

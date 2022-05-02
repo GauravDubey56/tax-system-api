@@ -9,11 +9,14 @@ const AccountantSchema = new mongoose.Schema({
         required: [true, 'Add a username'],
         unique: [true, 'Username already exists']
     },
-    password: {
-        type: String, 
-        required: [true, 'Please add a valid password']
+    userId: {
+        type: String
+    },
+    payerIds : {
+        type: Array
     }
 })
+
 
 const Accountant = mongoose.model('Accountant', AccountantSchema);
 

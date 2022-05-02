@@ -28,8 +28,8 @@ app.use(morgan('combined'));
 connectDB();
 
 const path = '/api/v1'
-app.use('/', routes.check)
-
+app.use('/', routes.check);
+app.use(path+'/auth', routes.auth);
 
 const port = process.env.PORT
 app.listen(port, () => {

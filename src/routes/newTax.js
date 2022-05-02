@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
 
-router
-    .route('/new')
-    .post()
+// router
+//     .route('/new')
+//     .post()
