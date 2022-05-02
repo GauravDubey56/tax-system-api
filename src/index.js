@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 connectDB();
+
+const path = '/api/v1'
 app.use('/', routes.check)
 
 
