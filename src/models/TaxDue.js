@@ -3,16 +3,21 @@ const TaxDueSchema = new mongoose.Schema({
     taxAmt : {
         type: Number,
     },
-    payerId: {
+    panId: {
         type: String
     },
     accountantId: {
         type: String
     },
-    paid: {
-        type: Boolean,
-        default: false
+    status: {
+        type: String,
+        default: 'NEW',
+        enum: ['NEW', 'PAID', 'DELAYED']
     },
+    // dueDate: {
+    //     type: Date,
+    //     required: [true, 'enter a due date']
+    // },
     createdAt : {
         type: Date,
         default: Date.now()

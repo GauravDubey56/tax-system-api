@@ -1,5 +1,6 @@
 const { Accountant, Payer, User } = require('../models');
-
+const passport = require('passport');
+const jwt = require('jsonwebtoken')
 // /api/v1/auth/new
 // public
 // add a new user
@@ -10,7 +11,7 @@ exports.registerUser = async (req, res, next) => {
         console.log(name)
         await User.register({ username: username }, password, async (err, user) => {
             if (err) {
-                console.log('register error'+err);
+                console.log('register error' + err);
                 return res.status(500).json({
                     success: false,
                     msg: err
@@ -42,6 +43,47 @@ exports.registerUser = async (req, res, next) => {
         return res.status(500).json({
             success: false,
             message: 'Unable to register user'
+        })
+    }
+}
+
+//@ api/v1/auth/login
+
+exports.loginUser = async (req, res,next) => {
+    try {
+        const user = new User({
+            username: req.body.username,
+            password: req.body.password
+        });
+        req.login(user, (err) => {
+            if (err) {
+                console.log('login err' + err);
+                return res.status(500).json({
+                    success: false,
+                    msg: 'unable to login'
+                })
+            } else {
+                passport.authenticate("local")(req, res, () => {
+                    const body = {
+                        userId : req.user._id,
+                        username: req.user.username,
+                        role: req.user.role
+                    }
+                    const token = jwt.sign({ user: body }, 'TOP_SECRET');
+                    return res.status(200).json({
+                        success: true,
+                        data: {
+                            ...body, token
+                        }
+                    })
+                });
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            success: false,
+            msg: error
         })
     }
 }

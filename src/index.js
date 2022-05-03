@@ -6,8 +6,11 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const session = require('express-session')
 const connectDB = require('./config/db');
+const passport = require('passport')
 
+require('./auth/auth');
 //routers
 const routes = require('./routes')
 const router = express.Router()
@@ -25,12 +28,20 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
+app.use(passport.initialize())
+app.use(session({
+  secret: 'testSecret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.session());
 connectDB();
 
 const path = '/api/v1'
 app.use('/', routes.check);
-app.use(path+'/auth', routes.auth);
-
+app.use(path+'/auth',routes.auth);
+app.use(path+'/tax', passport.authenticate('jwt', { session: false }),routes.newTax);
+app.use(cors())
 const port = process.env.PORT
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

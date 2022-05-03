@@ -29,7 +29,7 @@ const NewTaxSchema = new mongoose.Schema({
     otherIncome: {
         type: Number
     },
-    payerId: {
+    panId: {
         type: String
     },
     accountantId: {

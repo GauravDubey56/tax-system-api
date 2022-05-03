@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router();
+const controllers = require('../controllers/NewTax')
+router
+    .route('/')
+    .post(controllers.newTaxDue)
 
-// router
-//     .route('/new')
-//     .post()
+module.exports = router;
