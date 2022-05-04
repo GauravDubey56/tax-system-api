@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const TaxDueSchema = new mongoose.Schema({
-    taxAmt : {
+    taxAmt: {
         type: Number,
     },
     panId: {
@@ -14,11 +14,16 @@ const TaxDueSchema = new mongoose.Schema({
         default: 'NEW',
         enum: ['NEW', 'PAID', 'DELAYED']
     },
-    // dueDate: {
-    //     type: Date,
-    //     required: [true, 'enter a due date']
-    // },
-    createdAt : {
+    payerId: {
+        type: String
+    },
+    taxIncome :{
+        type: Number
+    },
+    dueDate: {
+        type: Date,
+    },
+    createdAt: {
         type: Date,
         default: Date.now()
     },

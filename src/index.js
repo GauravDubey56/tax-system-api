@@ -36,12 +36,17 @@ app.use(session({
 }));
 app.use(passport.session());
 connectDB();
+app.use(cors())
+
 
 const path = '/api/v1'
 app.use('/', routes.check);
 app.use(path+'/auth',routes.auth);
 app.use(path+'/tax', passport.authenticate('jwt', { session: false }),routes.newTax);
-app.use(cors())
+app.use(path+'/payer', passport.authenticate('jwt', { session: false }),routes.payTax);
+app.use(path+'/info', passport.authenticate('jwt', { session: false }), routes.info)
+
+
 const port = process.env.PORT
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

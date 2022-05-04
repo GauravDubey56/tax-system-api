@@ -62,4 +62,22 @@ NewTax.prototype.getGrossIncome = function (obj) {
     console.log(grossIncome);
     return grossIncome;
 }
+
+NewTax.prototype.getTaxAmt = function (income) {
+    if(income <= 250000) return 0;
+    const slabs = [
+        {rate : 5, add : 0},
+        {rate: 10, add : 12500},
+        {rate : 15, add : 37500},
+        {rate : 20, add : 75000},
+        {rate : 25, add: 125000},
+        {rate : 30, add : 187500}
+    ]
+    console.log(income)
+    const ind = (Math.round(income / 250000) > 6) ? 6: Math.round(income / 250000)
+    const rem = income - (ind * 250000)
+    console.log(ind, rem)
+    const amt = (rem * slabs[ind-1].rate)/100 + slabs[ind-1].add    
+    return amt * 1.04;
+}
 module.exports = NewTax;

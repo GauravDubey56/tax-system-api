@@ -49,7 +49,7 @@ exports.registerUser = async (req, res, next) => {
 
 //@ api/v1/auth/login
 
-exports.loginUser = async (req, res,next) => {
+exports.loginUser = async (req, res, next) => {
     try {
         const user = new User({
             username: req.body.username,
@@ -65,7 +65,7 @@ exports.loginUser = async (req, res,next) => {
             } else {
                 passport.authenticate("local")(req, res, () => {
                     const body = {
-                        userId : req.user._id,
+                        userId: req.user._id,
                         username: req.user.username,
                         role: req.user.role
                     }
@@ -84,6 +84,26 @@ exports.loginUser = async (req, res,next) => {
         return res.status(500).json({
             success: false,
             msg: error
+        })
+    }
+}
+
+// @api/v1/auth/logout
+
+exports.logoutUser = async (req, res, next) => {
+    try {
+        console.log('logout handler fired')
+        console.log(req.user);
+        req.logout()
+        console.log(req.user)
+        return res.status(200).json({
+            success: true,
+            msg: 'logout success'
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: true,
+            msg: 'unable to logout'
         })
     }
 }
