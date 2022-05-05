@@ -6,8 +6,6 @@ An API for a dummy tax system with 2 usr roles - accountant and payer
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
 ``node or docker
 npm i 
 or
