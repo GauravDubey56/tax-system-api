@@ -1,9 +1,10 @@
 const { NewTax, Payer, Accountant, TaxDue } = require('../models')
 
+
+// @GET api/v1/payer/getDue
 exports.getDueTaxes = async (req, res, next) => {
     try {
         const userId = req.user.userId;
-        console.log(req.user);
         const dueTaxes = await TaxDue.find({ payerId: userId });
         return res.status(200).json({
             success: true,
@@ -17,16 +18,17 @@ exports.getDueTaxes = async (req, res, next) => {
     }
 }
 
+// @GET api/v1/payer/pay
+// access to payer 
 exports.markTaxPaid = async (req, res, next) => {
     try {
         const taxId = req.body.taxId;
-        console.log(req.body);
         const taxObj = await TaxDue.findById(taxId);
-        console.log(taxObj);
+
         taxObj.status = 'PAID';
         taxObj.paidAt = Date.now();
+
         await taxObj.save();
-        console.log(taxObj);
         return res.status(200).json({
             success: true,
             data: taxObj

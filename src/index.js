@@ -14,11 +14,7 @@ require('./auth/auth');
 //routers
 const routes = require('./routes')
 const router = express.Router()
-// defining apps
 const app = express();
-dotenv.config({ path: './src/config/config.env' });
-//middlewares
-app.use(helmet());
 app.use(
   bodyParser.urlencoded({
     extended: false
@@ -26,6 +22,9 @@ app.use(
 );
 app.use(express.json());
 app.use(bodyParser.json());
+dotenv.config({ path: './src/config/config.env' });
+
+app.use(helmet());
 app.use(cors());
 app.use(morgan('combined'));
 app.use(passport.initialize())
@@ -42,12 +41,19 @@ app.use(cors())
 const path = '/api/v1'
 app.use('/', routes.check);
 app.use(path+'/auth',routes.auth);
+//below routes are private
 app.use(path+'/tax', passport.authenticate('jwt', { session: false }),routes.newTax);
 app.use(path+'/payer', passport.authenticate('jwt', { session: false }),routes.payTax);
 app.use(path+'/info', passport.authenticate('jwt', { session: false }), routes.info)
+app.use(path+'/filter', passport.authenticate('jwt', { session: false }), routes.query)
 
 
 const port = process.env.PORT
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== 'test'){
+  app.listen(port, () => {
+    console.log(`listening on port ${port}`);
+  });
+}
+
+
+module.exports = app;

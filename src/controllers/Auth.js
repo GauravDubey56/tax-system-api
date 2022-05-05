@@ -6,9 +6,7 @@ const jwt = require('jsonwebtoken')
 // add a new user
 exports.registerUser = async (req, res, next) => {
     try {
-        console.log(req.body)
         const { name, username, password, role } = await req.body;
-        console.log(name)
         await User.register({ username: username }, password, async (err, user) => {
             if (err) {
                 console.log('register error' + err);
@@ -39,7 +37,6 @@ exports.registerUser = async (req, res, next) => {
             }
         })
     } catch (err) {
-        console.log('catched error' + err);
         return res.status(500).json({
             success: false,
             message: 'Unable to register user'
@@ -55,6 +52,7 @@ exports.loginUser = async (req, res, next) => {
             username: req.body.username,
             password: req.body.password
         });
+        console.log('inside login funciton', user)
         req.login(user, (err) => {
             if (err) {
                 console.log('login err' + err);
@@ -89,13 +87,10 @@ exports.loginUser = async (req, res, next) => {
 }
 
 // @api/v1/auth/logout
-
+//req.user middleware is removed ,however jwt expiration is not enabled
 exports.logoutUser = async (req, res, next) => {
     try {
-        console.log('logout handler fired')
-        console.log(req.user);
         req.logout()
-        console.log(req.user)
         return res.status(200).json({
             success: true,
             msg: 'logout success'

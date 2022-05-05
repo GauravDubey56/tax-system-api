@@ -4,4 +4,5 @@ const auth = require('./auth')
 const newTax = require('./newTax')
 const payTax = require('./payTax')
 const info = require('./info')
-module.exports = { check, auth, newTax, payTax, info}
+const query = require('./query')
+module.exports = { check, auth, newTax, payTax, info, query}
