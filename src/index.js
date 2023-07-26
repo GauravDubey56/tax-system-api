@@ -4,10 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
+require('dotenv').config({ path: './src/config/config.env' });
 const colors = require('colors');
 const session = require('express-session')
 const connectDB = require('./config/db');
+// const connectDB = require('./config/dbConn');
 const passport = require('passport')
 
 require('./auth/auth');
@@ -22,7 +23,6 @@ app.use(
 );
 app.use(express.json());
 app.use(bodyParser.json());
-dotenv.config({ path: './src/config/config.env' });
 
 app.use(helmet());
 app.use(cors());
