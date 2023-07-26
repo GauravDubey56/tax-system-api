@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-require('dotenv').config({ path: './src/config/config.env' });
+require('dotenv').config({});
 const colors = require('colors');
 const session = require('express-session')
 const connectDB = require('./config/db');
